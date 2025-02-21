@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 const Header = () => {
@@ -17,10 +18,14 @@ const Header = () => {
         <div id="nav">
           <ul className="flex gap-2">
             <li>
-              <NavLink className={"hover:text-blue-400"} to={"/"}>Home</NavLink>
+              <NavLink className={"hover:text-blue-400"} to={"/"}>
+                Home
+              </NavLink>
             </li>
             <li>
-              <NavLink className={"hover:text-blue-400"}>Favorite</NavLink>
+              <NavLink className={"hover:text-blue-400"} to={"favourite"}>
+                Favorite
+              </NavLink>
             </li>
           </ul>
         </div>
