@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
-const Details = () => {
+const Details = ({ addToFavourite }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState({});
 
@@ -14,7 +14,6 @@ const Details = () => {
       const response = await axios.get(
         `https://forkify-api.herokuapp.com/api/v2/recipes/${id}`
       );
-      console.log(response.data.data.recipe);
       setData(response.data.data.recipe);
     } catch (error) {
       console.log(error);
@@ -23,10 +22,14 @@ const Details = () => {
     }
   };
 
+  const handleAddToFavourite = (e) => {
+    e.preventDefault();
+    addToFavourite(data);
+  }
+
   useEffect(() => {
     let { id } = param;
     fetchData(id);
-    console.log(id);
   }, [param]);
 
   if (isLoading)
@@ -55,9 +58,8 @@ const Details = () => {
               key={i}
               className="p-2 border border-blue-400 rounded-md font-semibold hover:bg-blue-600 hover:text-white transition duration-300"
             >
-              {`${item.quantity ? item.quantity + " " : ""}${
-                item.unit ? item.unit + " " : ""
-              }${item.description ? item.description : ""}`}
+              {`${item.quantity ? item.quantity + " " : ""}${item.unit ? item.unit + " " : ""
+                }${item.description ? item.description : ""}`}
             </li>
           ))}
         </ul>
@@ -72,7 +74,7 @@ const Details = () => {
         </p>
 
         <div className="grid lg:grid-cols-2 sm:grid-cols-1 gap-2 my-2">
-          <button className="bg-red-400 hover:bg-red-600 p-3 text-white font-bold rounded-md cursor-pointer">
+          <button onClick={handleAddToFavourite} className="bg-red-400 hover:bg-red-600 p-3 text-white font-bold rounded-md cursor-pointer">
             Save as Favourite
           </button>
           <Link

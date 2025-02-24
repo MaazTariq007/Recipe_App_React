@@ -3,7 +3,7 @@ import axios from "axios";
 import Cards from "../components/cards";
 import SkeletonLoader from "../components/Skeleton";
 
-const Home = () => {
+const Home = ({ search }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
 
@@ -11,9 +11,9 @@ const Home = () => {
     try {
       setIsLoading(true);
       const response = await axios.get(
-        "https://forkify-api.herokuapp.com/api/v2/recipes?search=pizza"
+        `https://forkify-api.herokuapp.com/api/v2/recipes?search=${search}`
       );
-      console.log(response.data.data.recipes);
+      // console.log(response.data.data.recipes);
       setData(response.data.data.recipes);
     } catch (error) {
       console.log(error);
@@ -24,7 +24,8 @@ const Home = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+    // console.log(search);
+  }, [search]);
 
   return (
     <>
